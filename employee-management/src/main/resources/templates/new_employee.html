@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Power Provision Managment System</title>
+
+	<link rel="stylesheet"
+		  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		  crossorigin="anonymous">
+
+</head>
+<body>
+
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top bg-primary">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#" th:href="@{/}">Power Provision Managment System</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<br>
+<br>
+
+<div class="container my-2">
+
+	<div th:if="${param.success}">
+		<div class="alert alert-info">You've successfully registered</div>
+	</div>
+<div class="card"></div>
+		<h1>Register</h1>
+		<hr>
+
+	<div class="card "style="width: 60rem;">
+<section>
+
+
+	<form action="#" th:action="@{/savePlot}" th:object="${plotRegistration}"
+			  method="POST">
+		<tr>
+		<td>Username:</td>
+		<td><input type="text" th:field="*{userName}" th:value="${#authentication.name}"
+		th:placeholder="${#authentication.name}" class="form-control " disabled="true"></br></td>
+		</tr>
+
+		<tr>
+			<td>Plot owner:</td>
+			<td><input type="text" th:field="*{plotNumber}"
+					   placeholder="Plot Owner" class="form-control mb-4 col-4"></br></td>
+		</tr>
+
+		<tr>
+			<td>Plot Number:</td>
+			<td><input type="text" th:field="*{plotOwner}"
+					   placeholder="Plot Number" class="form-control mb-4 col-4"></br></td>
+		</tr>
+
+		<tr>
+			<td>District:</td>
+		<td><input type="text" th:field="*{district}"
+				   placeholder="District" class="form-control mb-4 col-4"></br></td>
+		</tr>
+
+		<tr>
+			<td>Sector:</td>
+			<input type="text" th:field="*{sector}"
+				   placeholder="Sector" class="form-control mb-4 col-4"></br>
+		</tr>
+		<tr>
+			<td>Building Category:</td>
+		    <select th:field="*{category}" class="form-control mb-4 col-4">
+			<option disabled value="">Please select...</option>
+			<option value="Residence" th:text="Personal_Residence"></option>
+			<option value="Industrial" th:text="Industrial"></option>
+				<option value="offices" th:text="Business_offices"></option>
+			</select></br>
+		</tr>
+		<tr>
+			<td>Notable Appliances:</td></br>
+			<br>
+			<td>Car charger:</td>
+			<input
+					type="checkbox"
+					th:field="*{carCharger}"
+					name="myBooleanVariable"
+					th:checked="${myBooleanVariable}"/>
+
+			<td>Heavy Duty Machine:</td>
+			<input
+					type="checkbox"
+					th:field="*{heavyDuty}"
+					name="myBooleanVariable"
+					th:checked="${myBooleanVariable}"/>
+
+			<td>Industrial Appliances:</td>
+			<input
+					type="checkbox"
+					th:field="*{industrialAppliance}"
+					name="myBooleanVariable"
+					th:checked="${myBooleanVariable}"/>
+		</tr>
+
+		<br>
+		<br>
+			<button type="submit" class="btn btn-primary col-2"> Save Plot</button>
+		</form>
+	<br>
+
+
+</section>
+		<a th:href = "@{/home/{id}(id=${#authentication.name})}"> Back </a>
+
+
+</div>
+</div>
+</body>
+</html>

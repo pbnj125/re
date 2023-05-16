@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <style>
+
+        .table {
+  width: 100%;
+  text-align: left;
+  text-color: black;
+  background-color: #F2F2F2;
+  }
+  .table th{
+  color: #2565AE;}
+  .table td{
+  color:#2565AE;}
+
+
+    </style>
+</head>
+<body>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top bg-primary">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Power Provision Managment System</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container p-5 " >
+    <br>
+
+
+    <h1 style="font-size:60px;">Welcome</h1>
+
+    <!-- Display the name of the currently logged-in user -->
+    <p>Logged as: <span sec:authentication="name"></span></p>
+    <br>
+    <br>
+    <p>mind
+        dazzle
+        transport
+        light
+        development
+        brief
+        spade
+        cool
+        smile
+        flap
+        inquire
+        inform
+        debonair
+        willing
+        rattle
+        arithmetic
+        idealize
+        riddle
+        retch
+        blow
+        cattle
+        gruesome
+        shrill
+        light
+        development
+        brief
+        spade
+        maintain
+        maintain
+        process
+        endure
+        board
+        ambiguous
+        incentive bake slice assumption assume remain entrance impressive cold out layer instead quiet hall pot enormous above adapt with essential away scandal gold knock succeed spokesman physically travel struggle hey slip economics black often upon imagine image lie give yeah mental but juice exchange settle frustration retire missile green height </p>
+</div>
+
+
+<section class ="bg-primary">
+    <div class="container " >
+
+    <h1>Plot List</h1>
+
+
+
+        <a th:href = "@{/showNewPlot}" class="btn btn-primary "> Add New Plot </a>
+
+
+
+    <table border="1" class = "table table-striped  table-responsive-md bg-primary" >
+        <thead>
+        <tr>
+            <th>
+                   Plot number
+            </th>
+            <th>
+
+                    Plot Owner
+            </th>
+            <th>
+
+                    District
+            </th>
+            <th>
+
+                    Sector
+            </th>
+            <th>
+
+                    Category
+            </th>
+
+            <th>
+
+                    Appliances
+            </th>
+            <th> Additional Documents </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="plot: ${listplot}">
+            <td th:text="${plot.plotNumber}"></td>
+            <td th:text="${plot.plotOwner}"></td>
+            <td th:text="${plot.district}"></td>
+
+            <td th:text="${plot.sector}"></td>
+            <td th:text="${plot.category}"></td>
+            <td>
+
+                <input
+                type="checkbox"
+                text="car charger"
+                disabled="true"
+                th:checked="${plot.carCharger}">:car charger</input>
+
+                <input
+                        type="checkbox"
+                        text="car charger"
+                        disabled="true"
+                        th:checked="${plot.heavyDuty}">:industrial</input>
+                <input
+                        type="checkbox"
+                        text="car charger"
+                        disabled="true"
+                        th:checked="${plot.industrialAppliance}">:heavy duty</input>
+
+            </td>
+            <td>
+
+                <form th:unless="${plot.uploded == true}" th:action="@{/upload/{id}(id=${plot.id})}" method="post"
+                      enctype="multipart/form-data">
+                    <input class="form-control" name="file" type="file" id="formFile">
+                    <input type="submit" value="Upload" class="btn btn-primary">
+
+                </form>
+                <span th:if="${plot.uploded == true}">Uploaded</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+
+</section>
+<section>
+
+    <div class="container" >
+
+        <h1>Uploaded Documents</h1>
+
+
+        <br>
+        <br>
+        <table border="1" class = "table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                        Plot number</a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                        File name</a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
+                        size </a>
+                </th>
+
+                <th> action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="docu: ${listdocu}">
+                <td th:text="${docu.plotNumber}"></td>
+                <td th:text="${docu.profile}"></td>
+                <td th:text="${docu.size}"></td>
+
+
+                <td>
+
+                   <a th:href="@{'/download?id=' + ${docu.id}}">download</a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+</section>
+
+</body>
+</html>
